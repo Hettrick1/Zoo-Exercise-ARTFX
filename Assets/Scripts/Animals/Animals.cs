@@ -10,7 +10,7 @@ public class Animals : MonoBehaviour
     [SerializeField] protected float minX, maxX, minY, maxY;
     [SerializeField] protected GameObject nearestPaddock = null;
 
-
+    private GameObject animalInfoCanvas;
     private Button wheatBtn, fishBtn, meatBtn, julienBtn, waterBtn;
     protected FoodType foodType = FoodType.nothing;
 
@@ -42,6 +42,7 @@ public class Animals : MonoBehaviour
         meatBtn = GameObject.Find("Meat").GetComponent<Button>();
         julienBtn = GameObject.Find("Julien").GetComponent<Button>();
         waterBtn = GameObject.Find("Water").GetComponent<Button>();
+        animalInfoCanvas = GameObject.Find("AnimalUI");
     }
 
     protected void Start()
@@ -164,13 +165,34 @@ public class Animals : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
+        Vector2 mousePosition = Input.mousePosition;
+        float cameraWidth = Screen.width / 2;
         if (gameObject.CompareTag("Animals"))
         {
+            animalInfoCanvas.transform.GetChild(0).gameObject.SetActive(true);
+            if(mousePosition.x >= cameraWidth)
+            {
+                animalInfoCanvas.transform.GetChild(0).GetChild(0).gameObject.transform.localPosition = new Vector3(-250, 0, 0);
+            }
+            else
+            {
+                animalInfoCanvas.transform.GetChild(0).GetChild(0).gameObject.transform.localPosition = new Vector3(350, 0, 0);
+            }
+            print(animalInfoCanvas.transform.position);
             isAnimal = true;
         }
-        else isAnimal = false;
+        else
+        {
+            isAnimal = false;
+            animalInfoCanvas.transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        animalInfoCanvas.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public bool GetIsAnimal() { return isAnimal; }
