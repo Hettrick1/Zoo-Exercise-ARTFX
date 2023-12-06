@@ -22,5 +22,6 @@ public class Bear : Animals
             thirsty = 20;
             print("pu soif");
         }
+        AnimalUIManager.Instance.SetAnimalUIText(animalType, animalName, age, hunger, thirsty);
     }
 }
