@@ -1,4 +1,5 @@
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class Animals : MonoBehaviour
     [SerializeField] protected GameObject nearestPaddock = null;
 
 
-    private Button wheatBtn, fishBtn, meatBtn, julienBtn;
+    private Button wheatBtn, fishBtn, meatBtn, julienBtn, waterBtn;
     protected FoodType foodType = FoodType.nothing;
 
     protected float smallestDistance = Mathf.Infinity;
@@ -32,7 +33,7 @@ public class Animals : MonoBehaviour
 
     private Quaternion targetRotation;
 
-    private GameManager gameManager;
+    protected GameManager gameManager;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class Animals : MonoBehaviour
         fishBtn = GameObject.Find("Fish").GetComponent<Button>();
         meatBtn = GameObject.Find("Meat").GetComponent<Button>();
         julienBtn = GameObject.Find("Julien").GetComponent<Button>();
+        waterBtn = GameObject.Find("Water").GetComponent<Button>();
     }
 
     protected void Start()
@@ -49,6 +51,7 @@ public class Animals : MonoBehaviour
         fishBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.fish, fishBtn); });
         meatBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.meat, meatBtn); });
         julienBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.julien, julienBtn); });
+        waterBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.water, waterBtn); });
         nearestPaddock = gameManager.GetNearestPaddock();
         Direction();
     }
@@ -68,6 +71,7 @@ public class Animals : MonoBehaviour
             fishBtn.GetComponent<Image>().color = Color.white;
             meatBtn.GetComponent<Image>().color = Color.white;
             julienBtn.GetComponent<Image>().color = Color.white;
+            waterBtn.GetComponent<Image>().color = Color.white;
             foodType = food;
             button.GetComponent<Image>().color = Color.gray;
         }
@@ -140,7 +144,8 @@ public class Animals : MonoBehaviour
         grass,
         fish,
         meat,
-        julien
+        julien,
+        water
     }
 
     public void Sleep()
@@ -164,16 +169,9 @@ public class Animals : MonoBehaviour
         if (gameObject.CompareTag("Animals"))
         {
             isAnimal = true;
-            print(gameObject);
         }
         else isAnimal = false;
     }
 
     public bool GetIsAnimal() { return isAnimal; }
-
-
-    //public void Feed()
-    //{
-
-    //}
 }
