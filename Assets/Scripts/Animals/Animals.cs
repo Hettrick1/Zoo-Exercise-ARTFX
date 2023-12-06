@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Animals : MonoBehaviour
 {
     [SerializeField] protected string animalName;
+    [SerializeField] protected string animalType;
     [SerializeField] protected float age, hunger, thirsty, tiredness;
     [SerializeField] protected float minX, maxX, minY, maxY;
     [SerializeField] protected GameObject nearestPaddock = null;
@@ -47,6 +48,8 @@ public class Animals : MonoBehaviour
 
     protected void Start()
     {
+        hunger = 20;
+        thirsty = 20;
         gameManager = FindObjectOfType<GameManager>();
         wheatBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.grass, wheatBtn); });
         fishBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.fish, fishBtn); });
@@ -135,8 +138,8 @@ public class Animals : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * gameManager.GetSpeedTime() * Time.deltaTime);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * gameManager.GetSpeedTime() * Time.deltaTime);
         tiredness += 0.1f * gameManager.GetSpeedTime() * Time.deltaTime;
-        hunger += 0.2f * gameManager.GetSpeedTime() * Time.deltaTime;
-        thirsty += 0.2f * gameManager.GetSpeedTime() * Time.deltaTime;
+        hunger -= 0.2f * gameManager.GetSpeedTime() * Time.deltaTime;
+        thirsty -= 0.2f * gameManager.GetSpeedTime() * Time.deltaTime;
     }
 
     public enum FoodType
@@ -172,7 +175,8 @@ public class Animals : MonoBehaviour
         if (gameObject.CompareTag("Animals"))
         {
             animalInfoCanvas.transform.GetChild(0).gameObject.SetActive(true);
-            if(mousePosition.x >= cameraWidth)
+            AnimalUIManager.Instance.SetAnimalUIText(animalType, animalName, age, hunger, thirsty);
+            if (mousePosition.x >= cameraWidth)
             {
                 animalInfoCanvas.transform.GetChild(0).GetChild(0).gameObject.transform.localPosition = new Vector3(-250, 0, 0);
             }
@@ -180,7 +184,6 @@ public class Animals : MonoBehaviour
             {
                 animalInfoCanvas.transform.GetChild(0).GetChild(0).gameObject.transform.localPosition = new Vector3(350, 0, 0);
             }
-            print(animalInfoCanvas.transform.position);
             isAnimal = true;
         }
         else
@@ -194,6 +197,8 @@ public class Animals : MonoBehaviour
     {
         animalInfoCanvas.transform.GetChild(0).gameObject.SetActive(false);
     }
+
+    
 
     public bool GetIsAnimal() { return isAnimal; }
 }
