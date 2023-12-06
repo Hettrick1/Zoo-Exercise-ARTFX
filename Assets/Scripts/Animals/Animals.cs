@@ -24,9 +24,11 @@ public class Animals : MonoBehaviour
 
     private bool canMove;
     private bool isSleeping;
+    protected bool isAnimal;
+    private bool hasFood;
 
     private Vector2 movementDirection;
-    private Vector2 targetPosition;
+    private Vector3 targetPosition;
 
     private Quaternion targetRotation;
 
@@ -53,8 +55,10 @@ public class Animals : MonoBehaviour
 
     private void SetTypeOfFood(FoodType food, Button button)
     {
+        hasFood = true;
         if (food == foodType)
         {
+            hasFood = false;
             foodType = FoodType.nothing;
             button.GetComponent<Image>().color = Color.white;
         }
@@ -79,9 +83,9 @@ public class Animals : MonoBehaviour
         speed = Random.Range(0.4f, 1f);
         chillTime = Random.Range(2f, 4f);
 
-        targetPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+        targetPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0.1f);
 
-        Vector3 direction = (Vector3)targetPosition - transform.position;
+        Vector3 direction = targetPosition - transform.position;
 
         float angle = (Mathf.Atan2(direction.y, direction.x)) * Mathf.Rad2Deg;
         targetRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
@@ -109,6 +113,15 @@ public class Animals : MonoBehaviour
         if (canMove)
         {
             Move();
+        }
+        if (hasFood)
+        {
+            PaddockManager[] allPaddockManagers = FindObjectsOfType<PaddockManager>();
+
+            foreach (PaddockManager otherPaddockManager in allPaddockManagers)
+            {
+                otherPaddockManager.GetPaddockUI().SetActive(false);
+            }
         }
     }
 
@@ -146,7 +159,18 @@ public class Animals : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+    private void OnMouseOver()
+    {
+        if (gameObject.CompareTag("Animals"))
+        {
+            isAnimal = true;
+            print(gameObject);
+        }
+        else isAnimal = false;
+    }
+
+    public bool GetIsAnimal() { return isAnimal; }
+
 
     //public void Feed()
     //{

@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PaddockManager : MonoBehaviour
@@ -23,10 +26,12 @@ public class PaddockManager : MonoBehaviour
     private int nbrOfZebra, nbrOfBear, nbrOfLion, nbrOfMonkey;
 
     private GameManager gameManager;
+    private Animals animalsRef;
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        animalsRef = FindAnyObjectByType<Animals>();
 
         zebra.onClick.AddListener(delegate { SpawnAnimal("Zebra"); });
         bear.onClick.AddListener(delegate { SpawnAnimal("Bear"); });
@@ -134,10 +139,22 @@ public class PaddockManager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        paddockUI.SetActive(true);
-        isShowing = true;
-        gameManager.SetNearestPaddock(gameObject);
-        DisableOtherPaddockUIs();
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("Paddock"));
+        PointerEventData ped = new PointerEventData(EventSystem.current);
+        ped.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(ped, results);
+        if (results.Count ==0 && hit && (animalsRef == null || !animalsRef.GetIsAnimal())) 
+        {
+            if (hit.transform.gameObject.CompareTag("Paddock"))
+            {
+                paddockUI.SetActive(true);
+                isShowing = true;
+                gameManager.SetNearestPaddock(gameObject);
+                DisableOtherPaddockUIs();
+            }   
+        }
     }
 
     private void ShowBtn(bool zActive, bool bActive, bool lActive, bool mActive)
@@ -164,5 +181,10 @@ public class PaddockManager : MonoBehaviour
     {
         isShowing = false;
         DisableOtherPaddockUIs();
+    }
+    
+    public GameObject GetPaddockUI()
+    {
+        return paddockUI;
     }
 }
