@@ -14,13 +14,11 @@ public class Monkey : Animals
         {
             gameManager.SetMoney(-10);
             hunger = 20;
-            print("rassasié");
         }
         if (foodType == FoodType.water && thirsty < 19.5 && gameManager.GetMoney() >= 5)
         {
             gameManager.SetMoney(-5);
             thirsty = 20;
-            print("pu soif");
         }
         AnimalUIManager.Instance.SetAnimalUIText(animalType, animalName, age, hunger, thirsty);
     }

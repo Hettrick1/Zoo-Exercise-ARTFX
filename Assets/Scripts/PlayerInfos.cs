@@ -16,7 +16,7 @@ public class PlayerInfos
 public struct AnimalInfos
 {
     public Vector2 position;
-    public string name;
+    public string animalName;
     public string type;
     public float thirtsy;
     public float hunger;

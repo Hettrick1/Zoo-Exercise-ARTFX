@@ -98,12 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64fd00e354684fd45b2835c0dc0a0b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalName: Zebra
+  animalName: 
   animalType: 
   age: 0
   hunger: 0
   thirsty: 0
   tiredness: 0
+  diedAge: 1
   minX: 0
   maxX: 0
   minY: 0

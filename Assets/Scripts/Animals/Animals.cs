@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 
 public class Animals : MonoBehaviour
 {
-    [SerializeField] protected string animalName;
+    [SerializeField] protected string animalName = "";
     [SerializeField] protected string animalType;
     [SerializeField] protected float age, hunger, thirsty, tiredness;
     [SerializeField] protected float diedAge = 1;
@@ -49,7 +50,10 @@ public class Animals : MonoBehaviour
 
     protected virtual void Start()
     {
-        if(hunger == 0 && thirsty == 0)
+        Invoke(nameof(ChooseName), 0.1f);
+        Invoke(nameof(DiedAge), 0.1f);
+
+        if (hunger == 0 && thirsty == 0)
         {
             hunger = 20;
             thirsty = 20;
@@ -66,6 +70,28 @@ public class Animals : MonoBehaviour
         }
         Direction();
     }
+
+    private void DiedAge()
+    {
+        if(diedAge == 1)
+        {
+            diedAge = Random.Range(50, 100);
+        }
+    }
+
+    private void ChooseName()
+    {
+        if (animalName == "")
+        {
+            List<string> names = new List<string> { "Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hank", "Frimousse", "Zigzag", "Paillette", "Chocolatine", "Plumetis", "Croquignol", "Pamplemousse", "Bidouille", "Cacahuète", "Guimauve", "Sardine", "Tournicoti", "Fluffy", "Moustache", "Pétunia", "Quenotte", "Hibiscus", "Tralala", "Sauterelle", "Nougatine", "Gribouille", "Chaussette", "Popcorn", "Biscotto", "Tournesol", "Sifflote", "Guimbarde", "Pompon", "Cabriole", "Virevolte", "Tic-Tac", "Miette", "Banjo", "Grignote", "Trottinette", "Mouflette", "Caramel", "Tourbillon", "Poupoule", "Pirouette", "Frisouille", "Moka", "Galipette", "Sirocco", "Chipie", "Zorro", "Cracotte", "Roudoudou", "Tintinnabule", "Saperlipopette", "Vanille", "Zigouigoui", "Pamplemousse", "Coccinelle", "Frimoussette", "Choupinou", "Tournicoton", "Gribouillette", "Pirouline", "Tornade", "Bidule", "Zibeline", "Salsa", "Hérissonnette", "Sautillant", "Choucroute", "Moustachu", "Froufrou", "Papillon", "Yoyo", "Chiffonnette", "Siphon", "Pomme d'Amour", "Frisottis", "Popinette", "Croustille", "Zéphyr", "Guimauvette" };
+            int randomIndex = Random.Range(0, names.Count);
+
+            string randomName = names[randomIndex];
+
+            animalName = randomName;
+        }
+    }      
+
 
     private void SetTypeOfFood(FoodType food, Button button)
     {
@@ -142,6 +168,7 @@ public class Animals : MonoBehaviour
         {
             Died();
         }
+        age += 0.1f * gameManager.GetSpeedTime() * Time.deltaTime;
     }
 
     public void Move()
@@ -216,7 +243,7 @@ public class Animals : MonoBehaviour
     public float GetHunger() {  return hunger; }
     public float GetThirsty() {  return thirsty; }
     public float GetTiredness() { return tiredness; }
-    public string GetAnimalName() { return name; }
+    public string GetAnimalName() { return animalName; }
     public string GetAnimalType() { return animalType; }
     public bool GetCanMove() {  return canMove; }
     public bool GetIsSleeping() { return isSleeping; }
@@ -229,7 +256,7 @@ public class Animals : MonoBehaviour
         hunger = newHunger;
         thirsty = newThirty;
         tiredness = newTiredness;
-        name = newName;
+        animalName = newName;
         animalType = newAnimalType;
         canMove = newCanMove;
         isSleeping = newIsSleeping;
