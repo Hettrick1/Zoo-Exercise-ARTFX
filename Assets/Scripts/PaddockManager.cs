@@ -215,4 +215,20 @@ public class PaddockManager : MonoBehaviour
                 break;
         }
     }
+    public int GetNbrOfZebra() { return nbrOfZebra; }
+    public int GetNbrOfBear() {  return nbrOfBear; }
+    public int GetNbrOfLion() {  return nbrOfLion; }
+    public int GetNbrOfMonkey() {  return nbrOfMonkey; }
+    public int GetPaddockType() { return PaddockType; }
+
+    public void SetPaddockInfos(int newNbrOfZebra, int newNbrOfBear, int newNbrOfLion, int newNbrOfMonkey, int newPaddockType)
+    {
+        nbrOfZebra = newNbrOfZebra;
+        nbrOfBear = newNbrOfBear;
+        nbrOfLion = newNbrOfLion;
+        nbrOfMonkey = newNbrOfMonkey;
+        PaddockType = newPaddockType;
+        int nbrOfAnimals = nbrOfZebra + nbrOfBear + nbrOfLion + nbrOfMonkey;
+        nbreOfAnimalsText.SetText(nbrOfAnimals + " Animals");
+    }
 }

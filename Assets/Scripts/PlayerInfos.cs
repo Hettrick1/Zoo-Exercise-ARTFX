@@ -1,18 +1,39 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInfos : MonoBehaviour
+[Serializable]
+public class PlayerInfos
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<AnimalInfos> animals = new List<AnimalInfos>();
+    public List<PaddockInfos> paddocks = new List<PaddockInfos>();
+    public int money;
+    public int nbrTourists;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
+[Serializable]
+public struct AnimalInfos
+{
+    public Vector2 position;
+    public string name;
+    public string type;
+    public float thirtsy;
+    public float hunger;
+    public float tiredness;
+    public float age;
+    public float diedAge;
+    public bool canMove;
+    public bool isSleeping;
+    public GameObject nearestPaddock;
+}
+[Serializable]
+public struct PaddockInfos
+{
+    public int NbrOfZebra;
+    public int NbrOfBear;
+    public int NbrOfLion;
+    public int NbrOfMonkey;
+    public int PaddockType;
+}
+

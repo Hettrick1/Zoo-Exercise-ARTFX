@@ -49,15 +49,21 @@ public class Animals : MonoBehaviour
 
     protected virtual void Start()
     {
-        hunger = 20;
-        thirsty = 20;
+        if(hunger == 0 && thirsty == 0)
+        {
+            hunger = 20;
+            thirsty = 20;
+        }
         gameManager = FindObjectOfType<GameManager>();
         wheatBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.grass, wheatBtn); });
         fishBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.fish, fishBtn); });
         meatBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.meat, meatBtn); });
         julienBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.julien, julienBtn); });
         waterBtn.onClick.AddListener(delegate { SetTypeOfFood(FoodType.water, waterBtn); });
-        nearestPaddock = gameManager.GetNearestPaddock();
+        if (nearestPaddock == null)
+        {
+            nearestPaddock = gameManager.GetNearestPaddock();
+        }
         Direction();
     }
 
@@ -203,8 +209,31 @@ public class Animals : MonoBehaviour
     {
         animalInfoCanvas.transform.GetChild(0).gameObject.SetActive(false);
     }
-
-    
-
     public bool GetIsAnimal() { return isAnimal; }
+
+    public float GetAge() { return age; }
+    public float GetDiedAge() { return diedAge; }
+    public float GetHunger() {  return hunger; }
+    public float GetThirsty() {  return thirsty; }
+    public float GetTiredness() { return tiredness; }
+    public string GetAnimalName() { return name; }
+    public string GetAnimalType() { return animalType; }
+    public bool GetCanMove() {  return canMove; }
+    public bool GetIsSleeping() { return isSleeping; }
+    public GameObject GetNearestPaddock() { return nearestPaddock; }
+    public void SetLoadingData(Vector2 newPosition, float newAge, float newDiedAge, float newHunger, float newThirty, float newTiredness, string newName, string newAnimalType, bool newCanMove, bool newIsSleeping, GameObject newPaddock) 
+    {
+        transform.position = newPosition;
+        age = newAge; 
+        diedAge = newDiedAge;
+        hunger = newHunger;
+        thirsty = newThirty;
+        tiredness = newTiredness;
+        name = newName;
+        animalType = newAnimalType;
+        canMove = newCanMove;
+        isSleeping = newIsSleeping;
+        nearestPaddock = newPaddock;
+        AnimalUIManager.Instance.SetAnimalUIText(animalType, animalName, age, hunger, thirsty);
+    }
 }

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject nearestPaddock = null;
 
+
     private int money = 20000;
     private int entryPrice = 20;
     private int nbrTourist = 1;
@@ -24,28 +25,34 @@ public class GameManager : MonoBehaviour
 
     private Quaternion rotation;
 
+    public static GameManager instance;
+    TouristMovement[] tourists;
+
     private void Awake()
     {
+        instance = this;
         parking = GameObject.Find("Parking");
     }
 
     private void Start()
     {
+        tourists = FindObjectsOfType<TouristMovement>();
         SetMoneyText();
 
         speed1.onClick.AddListener(delegate { SetSpeedTime(1); });
         speed2.onClick.AddListener(delegate { SetSpeedTime(2); });
         speed3.onClick.AddListener(delegate { SetSpeedTime(3); });
 
-        Invoke(nameof(SpawnTourists), Random.Range(1f / speedTime, 5f / speedTime));
+        if(nbrTourist == 1)
+        {
+            Invoke(nameof(SpawnTourists), Random.Range(1f / speedTime, 5f / speedTime));
+        }
     }
 
     
 
     public void SpawnTourists()
     {
-        TouristMovement[] tourists = FindObjectsOfType<TouristMovement>();
-        print(tourists.Length);
         if (tourists.Length < nbrTourist)
         {
             spawnPosition = new Vector2(Random.Range(parking.transform.position.x - (parking.GetComponent<SpriteRenderer>().bounds.size.x / 2), parking.transform.position.x + (parking.GetComponent<SpriteRenderer>().bounds.size.x / 2)), Random.Range(parking.transform.position.y - (parking.GetComponent<SpriteRenderer>().bounds.size.y / 2), parking.transform.position.y + (parking.GetComponent<SpriteRenderer>().bounds.size.y / 2)));
@@ -65,7 +72,7 @@ public class GameManager : MonoBehaviour
         return speedTime;
     }
 
-    public float GetMoney()
+    public int GetMoney()
     {
         return money;
     }
@@ -99,5 +106,18 @@ public class GameManager : MonoBehaviour
     public void SetNbrTourist(int nombre)
     {
         nbrTourist += nombre;
+    }
+    public int GetNbrTourists() { return nbrTourist; }
+    public void SetGameManagerInfos(int newMoney, int newNbrOfTourist)
+    {
+        money = newMoney;
+        SetMoneyText();
+        nbrTourist = newNbrOfTourist;
+        for (int i = nbrTourist; i > tourists.Length; i--)
+        {     
+            spawnPosition = new Vector2(Random.Range(parking.transform.position.x - (parking.GetComponent<SpriteRenderer>().bounds.size.x / 2), parking.transform.position.x + (parking.GetComponent<SpriteRenderer>().bounds.size.x / 2)), Random.Range(parking.transform.position.y - (parking.GetComponent<SpriteRenderer>().bounds.size.y / 2), parking.transform.position.y + (parking.GetComponent<SpriteRenderer>().bounds.size.y / 2)));
+            Instantiate(touristPrefab, spawnPosition, rotation);
+        }
+        tourists = FindObjectsOfType<TouristMovement>();
     }
 }
