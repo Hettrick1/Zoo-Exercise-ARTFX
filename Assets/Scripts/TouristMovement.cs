@@ -90,6 +90,6 @@ public class TouristMovement : MonoBehaviour
     private void Disapear()
     {
         Destroy(gameObject);
-        gameManager.SpawnTourists();
+        gameManager.InvokeTourists();
     }
 }

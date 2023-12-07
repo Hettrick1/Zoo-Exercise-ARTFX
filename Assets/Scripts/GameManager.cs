@@ -11,10 +11,12 @@ public class GameManager : MonoBehaviour
 
     private int money = 20000;
     private int entryPrice = 20;
+    private int nbrTourist = 1;
 
     private float speedTime = 1;
 
     private GameObject parking;
+    
 
     [SerializeField] private GameObject touristPrefab;
 
@@ -42,10 +44,15 @@ public class GameManager : MonoBehaviour
 
     public void SpawnTourists()
     {
-        spawnPosition = new Vector2(Random.Range(parking.transform.position.x - (parking.GetComponent<SpriteRenderer>().bounds.size.x / 2), parking.transform.position.x + (parking.GetComponent<SpriteRenderer>().bounds.size.x / 2)), Random.Range(parking.transform.position.y - (parking.GetComponent<SpriteRenderer>().bounds.size.y / 2), parking.transform.position.y + (parking.GetComponent<SpriteRenderer>().bounds.size.y / 2)));
-        Instantiate(touristPrefab, spawnPosition, rotation);
-        money += (entryPrice);
-        SetMoneyText();
+        TouristMovement[] tourists = FindObjectsOfType<TouristMovement>();
+        print(tourists.Length);
+        if (tourists.Length < nbrTourist)
+        {
+            spawnPosition = new Vector2(Random.Range(parking.transform.position.x - (parking.GetComponent<SpriteRenderer>().bounds.size.x / 2), parking.transform.position.x + (parking.GetComponent<SpriteRenderer>().bounds.size.x / 2)), Random.Range(parking.transform.position.y - (parking.GetComponent<SpriteRenderer>().bounds.size.y / 2), parking.transform.position.y + (parking.GetComponent<SpriteRenderer>().bounds.size.y / 2)));
+            Instantiate(touristPrefab, spawnPosition, rotation);
+            money += (entryPrice);
+            SetMoneyText();
+        }
     }
 
     private void SetSpeedTime(int speed)
@@ -87,5 +94,10 @@ public class GameManager : MonoBehaviour
     public GameObject GetNearestPaddock()
     {
         return nearestPaddock;
+    }
+
+    public void SetNbrTourist(int nombre)
+    {
+        nbrTourist += nombre;
     }
 }

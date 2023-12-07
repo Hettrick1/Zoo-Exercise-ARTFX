@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Zebra : Animals
 {
-    private void Start()
+    protected override void Start()
     {
         animalType = "Zebra";
         base.Start();
@@ -23,5 +23,11 @@ public class Zebra : Animals
             print("pu soif");
         }
         AnimalUIManager.Instance.SetAnimalUIText(animalType, animalName, age, hunger, thirsty);
+    }
+
+    protected override void Died()
+    {
+        nearestPaddock.GetComponent<PaddockManager>().SetNbrOfAnimals("Zebra");
+        base.Died();
     }
 }

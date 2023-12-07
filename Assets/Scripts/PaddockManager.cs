@@ -83,6 +83,11 @@ public class PaddockManager : MonoBehaviour
         {
             paddockUI.SetActive(false);
         }
+        if ((PaddockType == 1 && nbrOfZebra == 0) || (PaddockType == 2 && nbrOfBear == 0) || (PaddockType == 3 && nbrOfLion == 0) || (PaddockType == 4 && nbrOfMonkey == 0))
+        {
+            PaddockType = 0;
+            nbreOfAnimalsText.SetText(0 + " Animals");
+        }
     }
 
     private void SpawnAnimal(string AnimalType)
@@ -96,6 +101,7 @@ public class PaddockManager : MonoBehaviour
                     Instantiate(zebraPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
                     nbrOfZebra += 1;
                     nbreOfAnimalsText.SetText(nbrOfZebra + " Animals");
+                    gameManager.SetNbrTourist(1);
                     gameManager.InvokeTourists();
                     gameManager.SetMoney(-zebraPrice);
                     
@@ -108,6 +114,7 @@ public class PaddockManager : MonoBehaviour
                     Instantiate(bearPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
                     nbrOfBear += 1;
                     nbreOfAnimalsText.SetText(nbrOfBear + " Animals");
+                    gameManager.SetNbrTourist(1);
                     gameManager.InvokeTourists();
                     gameManager.SetMoney(-bearPrice);
                 }
@@ -119,6 +126,7 @@ public class PaddockManager : MonoBehaviour
                     Instantiate(lionPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
                     nbrOfLion += 1;
                     nbreOfAnimalsText.SetText(nbrOfLion + " Animals");
+                    gameManager.SetNbrTourist(1);
                     gameManager.InvokeTourists();
                     gameManager.SetMoney(-lionPrice);
                 }
@@ -130,6 +138,7 @@ public class PaddockManager : MonoBehaviour
                     Instantiate(monkeyPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
                     nbrOfMonkey += 1;
                     nbreOfAnimalsText.SetText(nbrOfMonkey + " Animals");
+                    gameManager.SetNbrTourist(1);
                     gameManager.InvokeTourists();
                     gameManager.SetMoney(-monkeyPrice);
                 }
@@ -186,5 +195,24 @@ public class PaddockManager : MonoBehaviour
     public GameObject GetPaddockUI()
     {
         return paddockUI;
+    }
+
+    public void SetNbrOfAnimals(string animalType)
+    {
+        switch (animalType)
+        {
+            case "Zebra":
+                nbrOfZebra -= 1;
+                break;
+            case "Bear":
+                nbrOfBear -= 1;
+                break;
+            case "Lion":
+                nbrOfLion -= 1;
+                break;
+            case "Monkey":
+                nbrOfMonkey -= 1;
+                break;
+        }
     }
 }

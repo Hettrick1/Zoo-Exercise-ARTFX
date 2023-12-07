@@ -8,6 +8,7 @@ public class Animals : MonoBehaviour
     [SerializeField] protected string animalName;
     [SerializeField] protected string animalType;
     [SerializeField] protected float age, hunger, thirsty, tiredness;
+    [SerializeField] protected float diedAge = 1;
     [SerializeField] protected float minX, maxX, minY, maxY;
     [SerializeField] protected GameObject nearestPaddock = null;
 
@@ -46,7 +47,7 @@ public class Animals : MonoBehaviour
         animalInfoCanvas = GameObject.Find("AnimalUI");
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         hunger = 20;
         thirsty = 20;
@@ -131,6 +132,10 @@ public class Animals : MonoBehaviour
                 otherPaddockManager.GetPaddockUI().SetActive(false);
             }
         }
+        if (thirsty <= 0 || hunger <=0 || age >= diedAge)
+        {
+            Died();
+        }
     }
 
     public void Move()
@@ -163,8 +168,9 @@ public class Animals : MonoBehaviour
         }
     }
 
-    private void Died()
+    protected virtual void Died()
     {
+        gameManager.SetNbrTourist(-1);
         Destroy(gameObject);
     }
 
