@@ -44,13 +44,11 @@ public class SaveSystem : MonoBehaviour
                     if (p.uniqueID == paddocks[paddockIndex].uniqueID)
                     {
                         paddocks[paddockIndex].SetPaddockInfos(p.NbrOfZebra, p.NbrOfBear, p.NbrOfLion, p.NbrOfMonkey, p.PaddockType);
-                        Debug.Log(paddocks[paddockIndex].GetPaddockType());
                         oui = false;
                     }
                     paddockIndex++;
                     if(paddockIndex > playerInfos.paddocks.Count)
                     {
-                        Debug.Log("shit");
                         oui = false;
                     }
                 }
