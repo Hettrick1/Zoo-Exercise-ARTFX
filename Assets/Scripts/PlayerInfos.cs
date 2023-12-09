@@ -21,7 +21,7 @@ public struct AnimalInfos
     public float thirtsy;
     public float hunger;
     public float tiredness;
-    public float age;
+    public float age; 
     public float diedAge;
     public bool canMove;
     public bool isSleeping;

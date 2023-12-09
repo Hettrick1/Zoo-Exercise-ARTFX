@@ -5,8 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public void Play()
+
+    public void Continue()
     {
+        //LoadSaveManager.instance.SetIsNewGame(false);
+        SceneManager.LoadScene("SampleScene");
+    }
+    public void NewGame()
+    {
+        //LoadSaveManager.instance.SetIsNewGame(true);
         SceneManager.LoadScene("SampleScene");
     }
     public void Quit()

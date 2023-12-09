@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -108,6 +109,7 @@ public class GameManager : MonoBehaviour
         nbrTourist += nombre;
     }
     public int GetNbrTourists() { return nbrTourist; }
+
     public void SetGameManagerInfos(int newMoney, int newNbrOfTourist)
     {
         money = newMoney;

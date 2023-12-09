@@ -7,9 +7,20 @@ public class SaveSystem : MonoBehaviour
 
     public PlayerInfos playerInfos;
 
+    private LoadSaveManager loadSaveManager;
+
     private void Start()
     {
         instance = this;
+        ////loadSaveManager = LoadSaveManager.instance;
+        ////if (loadSaveManager.GetIsNewGame())
+        //{
+        //    Load();
+        //}
+        //else
+        //{
+        //    Load();
+        //}
         Load();
     }
 
