@@ -11,6 +11,8 @@ public class PaddockManager : MonoBehaviour
     [SerializeField] private TMP_Text zPriceText, bPriceText, lPriceText, mPriceText, nbreOfAnimalsText, PaddockTypeText;
     private bool isShowing;
 
+    public int uniqueID;
+
 
     private int PaddockType = 0;
 

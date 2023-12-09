@@ -12,16 +12,12 @@ public class SaveSystem : MonoBehaviour
     private void Start()
     {
         instance = this;
-        ////loadSaveManager = LoadSaveManager.instance;
-        ////if (loadSaveManager.GetIsNewGame())
-        //{
-        //    Load();
-        //}
-        //else
-        //{
-        //    Load();
-        //}
-        Load();
+        loadSaveManager = LoadSaveManager.instance;
+        if (!loadSaveManager.GetIsNewGame())
+        {
+            Load();
+        }
+
     }
 
     public void Load()
@@ -34,14 +30,31 @@ public class SaveSystem : MonoBehaviour
             foreach (AnimalInfos a in playerInfos.animals)
             {
                 Animals animals = Instantiate(Resources.Load<Animals>("Prefabs/" + a.type.Replace("(Clone)", "").Trim()));
-                animals.SetLoadingData(a.position, a.age, a.diedAge, a.hunger, a.thirtsy, a.tiredness, a.animalName, a.type, a.canMove, a.isSleeping, a.nearestPaddock);
+                animals.SetLoadingData(a.position, a.age, a.diedAge, a.hunger, a.thirtsy, a.tiredness, a.animalName, a.type, a.canMove, a.isSleeping, a.minX, a.maxX, a.minY, a.maxY);
             }
             PaddockManager[] paddocks = FindObjectsOfType<PaddockManager>();
-            int paddockIndex = 0;
+
             foreach (PaddockInfos p in playerInfos.paddocks)
             {
-                paddocks[paddockIndex].SetPaddockInfos(p.NbrOfZebra, p.NbrOfBear, p.NbrOfLion, p.NbrOfMonkey, p.PaddockType);
-                paddockIndex ++;
+                int paddockIndex = 0;
+                
+                bool oui = true;
+                while (oui)
+                {
+                    if (p.uniqueID == paddocks[paddockIndex].uniqueID)
+                    {
+                        paddocks[paddockIndex].SetPaddockInfos(p.NbrOfZebra, p.NbrOfBear, p.NbrOfLion, p.NbrOfMonkey, p.PaddockType);
+                        Debug.Log(paddocks[paddockIndex].GetPaddockType());
+                        oui = false;
+                    }
+                    paddockIndex++;
+                    if(paddockIndex > playerInfos.paddocks.Count)
+                    {
+                        Debug.Log("shit");
+                        oui = false;
+                    }
+                }
+                
             }
             GameManager.instance.SetGameManagerInfos(playerInfos.money, playerInfos.nbrTourists);
         }
@@ -58,14 +71,14 @@ public class SaveSystem : MonoBehaviour
         playerInfos.animals.Clear();
         foreach (Animals animal in animals)
         {
-            playerInfos.animals.Add(new AnimalInfos() { position = animal.transform.position, animalName = animal.GetAnimalName(), type = animal.GetAnimalType(), thirtsy = animal.GetThirsty(), hunger = animal.GetHunger(), tiredness = animal.GetTiredness(), age = animal.GetAge(), diedAge = animal.GetDiedAge(), canMove = animal.GetCanMove(), isSleeping = animal.GetIsSleeping(), nearestPaddock = animal.GetNearestPaddock() });
+            playerInfos.animals.Add(new AnimalInfos() { position = animal.transform.position, animalName = animal.GetAnimalName(), type = animal.GetAnimalType(), thirtsy = animal.GetThirsty(), hunger = animal.GetHunger(), tiredness = animal.GetTiredness(), age = animal.GetAge(), diedAge = animal.GetDiedAge(), canMove = animal.GetCanMove(), isSleeping = animal.GetIsSleeping(), minX = animal.GetMinX(), maxX = animal.GetMaxX(), minY = animal.GetMinY(), maxY = animal.GetMaxY() });
         }
 
         PaddockManager[] paddocks = FindObjectsOfType<PaddockManager>();
         playerInfos.paddocks.Clear();
         foreach (PaddockManager paddock in paddocks)
         {
-            playerInfos.paddocks.Add(new PaddockInfos() { NbrOfZebra = paddock.GetNbrOfZebra(), NbrOfBear = paddock.GetNbrOfBear(), NbrOfLion = paddock.GetNbrOfLion(), NbrOfMonkey = paddock.GetNbrOfMonkey(), PaddockType = paddock.GetPaddockType() });
+            playerInfos.paddocks.Add(new PaddockInfos() { NbrOfZebra = paddock.GetNbrOfZebra(), NbrOfBear = paddock.GetNbrOfBear(), NbrOfLion = paddock.GetNbrOfLion(), NbrOfMonkey = paddock.GetNbrOfMonkey(), PaddockType = paddock.GetPaddockType(), uniqueID = paddock.uniqueID });
         }
 
 

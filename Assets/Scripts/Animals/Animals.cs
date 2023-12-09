@@ -117,10 +117,13 @@ public class Animals : MonoBehaviour
 
     void Direction()
     {
-        minX = nearestPaddock.transform.position.x - (nearestPaddock.GetComponent<SpriteRenderer>().bounds.size.x / 2 - paddockOffset);
-        maxX = nearestPaddock.transform.position.x + (nearestPaddock.GetComponent<SpriteRenderer>().bounds.size.x / 2 - paddockOffset);
-        minY = nearestPaddock.transform.position.y - (nearestPaddock.GetComponent<SpriteRenderer>().bounds.size.y / 2 - paddockOffset);
-        maxY = nearestPaddock.transform.position.y + (nearestPaddock.GetComponent<SpriteRenderer>().bounds.size.y / 2 - paddockOffset);
+        if (nearestPaddock != null)
+        {
+            minX = nearestPaddock.transform.position.x - (nearestPaddock.GetComponent<SpriteRenderer>().bounds.size.x / 2 - paddockOffset);
+            maxX = nearestPaddock.transform.position.x + (nearestPaddock.GetComponent<SpriteRenderer>().bounds.size.x / 2 - paddockOffset);
+            minY = nearestPaddock.transform.position.y - (nearestPaddock.GetComponent<SpriteRenderer>().bounds.size.y / 2 - paddockOffset);
+            maxY = nearestPaddock.transform.position.y + (nearestPaddock.GetComponent<SpriteRenderer>().bounds.size.y / 2 - paddockOffset);
+        }
         speed = Random.Range(0.4f, 1f);
         chillTime = Random.Range(2f, 4f);
 
@@ -248,7 +251,11 @@ public class Animals : MonoBehaviour
     public bool GetCanMove() {  return canMove; }
     public bool GetIsSleeping() { return isSleeping; }
     public GameObject GetNearestPaddock() { return nearestPaddock; }
-    public void SetLoadingData(Vector2 newPosition, float newAge, float newDiedAge, float newHunger, float newThirty, float newTiredness, string newName, string newAnimalType, bool newCanMove, bool newIsSleeping, GameObject newPaddock) 
+    public float GetMinX() { return minX; }
+    public float GetMaxX() { return maxX; }
+    public float GetMinY() { return minY; }
+    public float GetMaxY() { return maxY; }
+    public void SetLoadingData(Vector2 newPosition, float newAge, float newDiedAge, float newHunger, float newThirty, float newTiredness, string newName, string newAnimalType, bool newCanMove, bool newIsSleeping, float newMinX, float newMaxX, float newMinY, float newMaxY) 
     {
         transform.position = newPosition;
         age = newAge; 
@@ -260,7 +267,10 @@ public class Animals : MonoBehaviour
         animalType = newAnimalType;
         canMove = newCanMove;
         isSleeping = newIsSleeping;
-        nearestPaddock = newPaddock;
+        minX = newMinX;
+        maxX = newMaxX;
+        minY = newMinY;
+        maxY = newMaxY;
         AnimalUIManager.Instance.SetAnimalUIText(animalType, animalName, age, hunger, thirsty);
     }
 }

@@ -8,12 +8,12 @@ public class MenuManager : MonoBehaviour
 
     public void Continue()
     {
-        //LoadSaveManager.instance.SetIsNewGame(false);
+        LoadSaveManager.instance.SetIsNewGame(false);
         SceneManager.LoadScene("SampleScene");
     }
     public void NewGame()
     {
-        //LoadSaveManager.instance.SetIsNewGame(true);
+        LoadSaveManager.instance.SetIsNewGame(true);
         SceneManager.LoadScene("SampleScene");
     }
     public void Quit()

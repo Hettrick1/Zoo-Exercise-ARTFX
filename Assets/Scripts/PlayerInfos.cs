@@ -25,7 +25,7 @@ public struct AnimalInfos
     public float diedAge;
     public bool canMove;
     public bool isSleeping;
-    public GameObject nearestPaddock;
+    public float minX, maxX, minY, maxY;
 }
 [Serializable]
 public struct PaddockInfos
@@ -35,5 +35,6 @@ public struct PaddockInfos
     public int NbrOfLion;
     public int NbrOfMonkey;
     public int PaddockType;
+    public int uniqueID;
 }
 
