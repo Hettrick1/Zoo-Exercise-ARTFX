@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveAndQuit()
     {
+        Destroy(AudioManager.instance.gameObject);
         SceneManager.LoadScene("MainMenu");
     }
 

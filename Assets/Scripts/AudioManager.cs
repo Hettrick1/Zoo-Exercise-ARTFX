@@ -11,23 +11,21 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI volumeTxt;
     [SerializeField] private AudioClip menuMusicClip;
     [SerializeField] private AudioClip gameMusicClip;
+    private Button saveBtn;
 
     public static AudioManager instance;
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
         volumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
         volumeTxt = GameObject.Find("VolumeTxt").GetComponent<TextMeshProUGUI>();
+        saveBtn = GameObject.Find("SaveVolumeBtn").GetComponent<Button>();
+        saveBtn.onClick.AddListener(ChangeVolume);
     }
     public void ChangeVolume()
     {
@@ -40,16 +38,22 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMenuMusic()
     {
-        backgroundMusic.Stop();
-        backgroundMusic.clip = menuMusicClip;
-        backgroundMusic.Play();
+        if(AudioManager.instance != null)
+        {
+            backgroundMusic.Stop();
+            backgroundMusic.clip = menuMusicClip;
+            backgroundMusic.Play();
+        }   
     }
 
     public void PlayGameMusic()
     {
-        backgroundMusic.Stop();
-        backgroundMusic.clip = gameMusicClip;
-        backgroundMusic.Play();
+        if (AudioManager.instance != null)
+        {
+            backgroundMusic.Stop();
+            backgroundMusic.clip = gameMusicClip;
+            backgroundMusic.Play();
+        }
     }
 
     public void StopMusic()
