@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Canvas pauseMenu;
 
 
-    private int money = 20000;
+    private int money = 1000;
     private int entryPrice = 20;
     private int nbrTourist = 1;
 

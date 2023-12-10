@@ -172,7 +172,7 @@ public class Animals : MonoBehaviour
         {
             Died();
         }
-        age += 0.1f * gameManager.GetSpeedTime() * Time.deltaTime;
+        age += 0.01f * gameManager.GetSpeedTime() * Time.deltaTime;
     }
 
     public void Move()
