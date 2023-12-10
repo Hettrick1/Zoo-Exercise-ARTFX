@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -10,10 +11,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject nearestPaddock = null;
 
+    [SerializeField] private Canvas pauseMenu;
+
 
     private int money = 20000;
     private int entryPrice = 20;
     private int nbrTourist = 1;
+
+    private bool isPaddockUi;
 
     private float speedTime = 1;
 
@@ -37,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        HidePauseMenu();
         tourists = FindObjectsOfType<TouristMovement>();
         SetMoneyText();
 
@@ -50,7 +56,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
+    private void Update()
+    {
+        if (!isPaddockUi && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ShowPauseMenu();
+        }
+    }
 
     public void SpawnTourists()
     {
@@ -61,6 +73,28 @@ public class GameManager : MonoBehaviour
             money += (entryPrice);
             SetMoneyText();
         }
+    }
+
+    public void ShowPauseMenu()
+    {
+        pauseMenu.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void HidePauseMenu()
+    {
+        pauseMenu.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void SaveAndQuit()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void SetIsPaddockUi(bool activated)
+    {
+        isPaddockUi = activated;
     }
 
     private void SetSpeedTime(int speed)

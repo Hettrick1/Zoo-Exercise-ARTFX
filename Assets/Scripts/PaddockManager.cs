@@ -51,12 +51,12 @@ public class PaddockManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && isShowing)
         {
-            isShowing = false;
-            DisableOtherPaddockUIs();
+            QuitPaddockUI();
         }
 
         if (isShowing)
         {
+            gameManager.SetIsPaddockUi(true);
             switch (PaddockType)
             {
                 case 0:
@@ -192,6 +192,12 @@ public class PaddockManager : MonoBehaviour
     {
         isShowing = false;
         DisableOtherPaddockUIs();
+        Invoke(nameof(InvokeSetIsPaddockUi), 0.1f);
+    }
+
+    private void InvokeSetIsPaddockUi()
+    {
+        gameManager.SetIsPaddockUi(false);
     }
     
     public GameObject GetPaddockUI()
