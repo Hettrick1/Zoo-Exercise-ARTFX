@@ -23,7 +23,7 @@ public class PaddockManager : MonoBehaviour
     [SerializeField] private int lionPrice = 450;
     [SerializeField] private int monkeyPrice = 210;
 
-    [SerializeField] private GameObject zebraPrefab, bearPrefab, lionPrefab, monkeyPrefab, zebraBtn, bearBtn, lionBtn, monkeyBtn;
+    [SerializeField] private GameObject zebraPrefab, bearPrefab, lionPrefab, monkeyPrefab, zebraBtn, bearBtn, lionBtn, monkeyBtn, newAnimal;
 
     private int nbrOfZebra, nbrOfBear, nbrOfLion, nbrOfMonkey;
 
@@ -100,7 +100,8 @@ public class PaddockManager : MonoBehaviour
                 if (nbrOfZebra < 6 && gameManager.GetMoney() >= zebraPrice)
                 {
                     PaddockType = 1;
-                    Instantiate(zebraPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+                    newAnimal = Instantiate(zebraPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+                    newAnimal.GetComponent<Animals>().SetPaddockUniqueID(uniqueID);
                     nbrOfZebra += 1;
                     nbreOfAnimalsText.SetText(nbrOfZebra + " Animals");
                     gameManager.SetNbrTourist(1);
@@ -113,7 +114,8 @@ public class PaddockManager : MonoBehaviour
                 if (nbrOfBear < 4 && gameManager.GetMoney() >= bearPrice)
                 {
                     PaddockType = 2;
-                    Instantiate(bearPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+                    newAnimal = Instantiate(bearPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+                    newAnimal.GetComponent<Animals>().SetPaddockUniqueID(uniqueID);
                     nbrOfBear += 1;
                     nbreOfAnimalsText.SetText(nbrOfBear + " Animals");
                     gameManager.SetNbrTourist(1);
@@ -125,7 +127,8 @@ public class PaddockManager : MonoBehaviour
                 if (nbrOfLion < 8 && gameManager.GetMoney() >= lionPrice)
                 {
                     PaddockType = 3;
-                    Instantiate(lionPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+                    newAnimal = Instantiate(lionPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+                    newAnimal.GetComponent<Animals>().SetPaddockUniqueID(uniqueID);
                     nbrOfLion += 1;
                     nbreOfAnimalsText.SetText(nbrOfLion + " Animals");
                     gameManager.SetNbrTourist(1);
@@ -137,7 +140,8 @@ public class PaddockManager : MonoBehaviour
                 if (nbrOfMonkey < 10 && gameManager.GetMoney() >= monkeyPrice)
                 {
                     PaddockType = 4;
-                    Instantiate(monkeyPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+                    newAnimal = Instantiate(monkeyPrefab, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+                    newAnimal.GetComponent<Animals>().SetPaddockUniqueID(uniqueID);
                     nbrOfMonkey += 1;
                     nbreOfAnimalsText.SetText(nbrOfMonkey + " Animals");
                     gameManager.SetNbrTourist(1);

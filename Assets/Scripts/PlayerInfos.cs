@@ -26,6 +26,7 @@ public struct AnimalInfos
     public bool canMove;
     public bool isSleeping;
     public float minX, maxX, minY, maxY;
+    public int uniqueID;
 }
 [Serializable]
 public struct PaddockInfos

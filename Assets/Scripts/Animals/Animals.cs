@@ -11,6 +11,7 @@ public class Animals : MonoBehaviour
     [SerializeField] protected float age, hunger, thirsty, tiredness;
     [SerializeField] protected float diedAge = 1;
     [SerializeField] protected float minX, maxX, minY, maxY;
+    [SerializeField] protected int paddockUniqueID;
     [SerializeField] protected GameObject nearestPaddock = null;
 
     private GameObject animalInfoCanvas;
@@ -255,7 +256,9 @@ public class Animals : MonoBehaviour
     public float GetMaxX() { return maxX; }
     public float GetMinY() { return minY; }
     public float GetMaxY() { return maxY; }
-    public void SetLoadingData(Vector2 newPosition, float newAge, float newDiedAge, float newHunger, float newThirty, float newTiredness, string newName, string newAnimalType, bool newCanMove, bool newIsSleeping, float newMinX, float newMaxX, float newMinY, float newMaxY) 
+    public int GetPaddockUniqueID() {  return paddockUniqueID; }
+    public void SetPaddockUniqueID(int ID) {  paddockUniqueID = ID; }
+    public void SetLoadingData(Vector2 newPosition, float newAge, float newDiedAge, float newHunger, float newThirty, float newTiredness, string newName, string newAnimalType, bool newCanMove, bool newIsSleeping, float newMinX, float newMaxX, float newMinY, float newMaxY, int newPaddockUniqueId) 
     {
         transform.position = newPosition;
         age = newAge; 
@@ -271,6 +274,7 @@ public class Animals : MonoBehaviour
         maxX = newMaxX;
         minY = newMinY;
         maxY = newMaxY;
+        paddockUniqueID = newPaddockUniqueId;
         AnimalUIManager.Instance.SetAnimalUIText(animalType, animalName, age, hunger, thirsty);
     }
 }

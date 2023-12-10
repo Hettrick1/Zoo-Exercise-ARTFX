@@ -24,7 +24,14 @@ public class Lion : Animals
     }
     protected override void Died()
     {
-        gameManager.GetNearestPaddock().GetComponent<PaddockManager>().SetNbrOfAnimals("Lion");
+        PaddockManager[] paddocks = FindObjectsOfType<PaddockManager>();
+        foreach (PaddockManager p in paddocks)
+        {
+            if (p.uniqueID == paddockUniqueID)
+            {
+                p.SetNbrOfAnimals("Lion");
+            }
+        }
         base.Died();
     }
 }

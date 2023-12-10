@@ -25,7 +25,14 @@ public class Zebra : Animals
 
     protected override void Died()
     {
-        nearestPaddock.GetComponent<PaddockManager>().SetNbrOfAnimals("Zebra");
+        PaddockManager[] paddocks = FindObjectsOfType<PaddockManager>();
+        foreach (PaddockManager p in paddocks)
+        {
+            if (p.uniqueID == paddockUniqueID)
+            {
+                p.SetNbrOfAnimals("Zebra");
+            }
+        }
         base.Died();
     }
 }

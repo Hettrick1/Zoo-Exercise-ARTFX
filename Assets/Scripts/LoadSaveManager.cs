@@ -8,8 +8,15 @@ public class LoadSaveManager : MonoBehaviour
     public static LoadSaveManager instance;
     void Start()
     {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SetIsNewGame(bool newGame) { isNewGame = newGame; }

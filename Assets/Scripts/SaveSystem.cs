@@ -30,7 +30,7 @@ public class SaveSystem : MonoBehaviour
             foreach (AnimalInfos a in playerInfos.animals)
             {
                 Animals animals = Instantiate(Resources.Load<Animals>("Prefabs/" + a.type.Replace("(Clone)", "").Trim()));
-                animals.SetLoadingData(a.position, a.age, a.diedAge, a.hunger, a.thirtsy, a.tiredness, a.animalName, a.type, a.canMove, a.isSleeping, a.minX, a.maxX, a.minY, a.maxY);
+                animals.SetLoadingData(a.position, a.age, a.diedAge, a.hunger, a.thirtsy, a.tiredness, a.animalName, a.type, a.canMove, a.isSleeping, a.minX, a.maxX, a.minY, a.maxY, a.uniqueID);
             }
             PaddockManager[] paddocks = FindObjectsOfType<PaddockManager>();
 
@@ -69,7 +69,7 @@ public class SaveSystem : MonoBehaviour
         playerInfos.animals.Clear();
         foreach (Animals animal in animals)
         {
-            playerInfos.animals.Add(new AnimalInfos() { position = animal.transform.position, animalName = animal.GetAnimalName(), type = animal.GetAnimalType(), thirtsy = animal.GetThirsty(), hunger = animal.GetHunger(), tiredness = animal.GetTiredness(), age = animal.GetAge(), diedAge = animal.GetDiedAge(), canMove = animal.GetCanMove(), isSleeping = animal.GetIsSleeping(), minX = animal.GetMinX(), maxX = animal.GetMaxX(), minY = animal.GetMinY(), maxY = animal.GetMaxY() });
+            playerInfos.animals.Add(new AnimalInfos() { position = animal.transform.position, animalName = animal.GetAnimalName(), type = animal.GetAnimalType(), thirtsy = animal.GetThirsty(), hunger = animal.GetHunger(), tiredness = animal.GetTiredness(), age = animal.GetAge(), diedAge = animal.GetDiedAge(), canMove = animal.GetCanMove(), isSleeping = animal.GetIsSleeping(), minX = animal.GetMinX(), maxX = animal.GetMaxX(), minY = animal.GetMinY(), maxY = animal.GetMaxY(), uniqueID = animal.GetPaddockUniqueID() });
         }
 
         PaddockManager[] paddocks = FindObjectsOfType<PaddockManager>();
