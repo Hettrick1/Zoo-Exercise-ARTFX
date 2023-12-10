@@ -59,7 +59,6 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Nouvelle scène chargée : " + scene.name);
         if (scene.name == "MainMenu")
         {
             volumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
